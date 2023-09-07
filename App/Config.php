@@ -24,13 +24,13 @@ class Config
      * Database name
      * @var string
      */
-    const DB_NAME = 'library_v1';
+    const DB_NAME = 'library3';
 
     /**
      * Database user
      * @var string
      */
-    const DB_USER = 'root';
+    const DB_USER = 'pmauser';
 
     /**
      * Database password
