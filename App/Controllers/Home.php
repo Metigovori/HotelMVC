@@ -2,6 +2,8 @@
 
 namespace App\Controllers;
 
+use App\Models\Contact;
+use App\Models\Roombook;
 use \Core\View;
 use \Core\Controller;
 
@@ -16,8 +18,16 @@ class Home extends Controller
      *
      * @return void
      */
-    public function index()
+
+    public function client()
     {
-        View::renderTemplate('Dashboard/index.html');
+        View::renderTemplate('LandingPage/index.html');
+    }
+
+    public function admin()
+    {
+        $contacts = Contact::orderBy('id', 'desc')->get();
+        $roombook = Roombook::orderBy('id', 'desc')->get();
+        View::renderTemplate('home.html', ['roombook' => $roombook], ['contacts' => $contacts]);
     }
 }

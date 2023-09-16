@@ -1,7 +1,7 @@
 <?php
 namespace App\Controllers;
 
-use App\Models\User;
+use App\Models\Users;
 use \Core\View;
 use \Core\Controller;
 
@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function index()
     {
-        $users = User::orderBy('id', 'desc')->get();
+        $users = Users::orderBy('id', 'desc')->get();
         View::renderTemplate('Users/index.html', ['users' => $users]);
     }
 
@@ -20,7 +20,7 @@ class UserController extends Controller
 
     public function store()
     {
-        $user = new User();
+        $user = new Users();
         $user->first_name = $_POST['first_name'];
         $user->last_name = $_POST['last_name'];
         $user->country = $_POST['country'];
@@ -41,13 +41,13 @@ class UserController extends Controller
 
     public function edit()
     {
-        $user = User::findOrFail($_POST['id']);
+        $user = Users::findOrFail($_POST['id']);
         View::renderTemplate('Users/edit.html', ['user' => $user]);
     }
 
     public function update()
     {
-        $user = User::findOrFail($_POST['id']);
+        $user = Users::findOrFail($_POST['id']);
         $user->first_name = $_POST['first_name'];
         $user->last_name = $_POST['last_name'];
         $user->country = $_POST['country'];
@@ -62,7 +62,7 @@ class UserController extends Controller
 
     public function destroy()
     {
-        $user = User::findOrFail($_POST['id']);
+        $user = Users::findOrFail($_POST['id']);
         $user->delete();
         header("Location: /users");
     }

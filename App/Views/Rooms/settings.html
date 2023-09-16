@@ -1,0 +1,70 @@
+{% extends "layout/header.html" %}
+
+
+{% block content %}
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    AVAILABLE  <small>ROOM'S</small>
+                </h1>
+            </div>
+        </div>
+
+      
+
+    
+
+        {% if rooms|length > 0 %}
+            <div class='row'>
+                {% for room in rooms %}
+                    {% set id = room.type %}
+                    {% set panel_color = "" %}
+
+                    {% if id == "Superior Room" %}
+                        {% set panel_color = "blue" %}
+                    {% elseif id == "Deluxe Room" %}
+                        {% set panel_color = "green" %}
+                    {% elseif id == "Guest House" %}
+                        {% set panel_color = "brown" %}
+                    {% elseif id == "Single Room" %}
+                        {% set panel_color = "red" %}
+                    {% endif %}
+
+
+                    <div class='col-md-3 col-sm-12 col-xs-12'>
+                        <div class='panel panel-primary text-center no-boder bg-color-{{ panel_color }}'>
+                            <div class='panel-body'>
+                                <i class='fa fa-users fa-5x'></i>
+                                <h3>{{ room.bedding }}</h3>
+                            </div>
+                            <div class='panel-footer back-footer-{{ panel_color }}'>
+                                {{ room.type }}
+                            </div>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% else %}
+            No rooms found.
+        {% endif %}
+    </div>
+    <!-- /. PAGE INNER  -->
+</div>
+<!-- /. PAGE WRAPPER  -->
+</div>
+<!-- /. WRAPPER  -->
+<!-- JS Scripts-->
+<!-- jQuery Js -->
+<script src="assets/js/jquery-1.10.2.js"></script>
+<!-- Bootstrap Js -->
+<script src="assets/js/bootstrap.min.js"></script>
+<!-- Metis Menu Js -->
+<script src="assets/js/jquery.metisMenu.js"></script>
+<!-- Custom Js -->
+<script src="assets/js/custom-scripts.js"></script>
+</body>
+
+</html>
+{% endblock %}

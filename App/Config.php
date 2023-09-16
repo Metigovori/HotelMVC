@@ -18,13 +18,13 @@ class Config
      * Database host
      * @var string
      */
-    const DB_HOST = '127.0.0.1';
+    const DB_HOST = 'localhost';
 
     /**
      * Database name
      * @var string
      */
-    const DB_NAME = 'library3';
+    const DB_NAME = 'hotel';
 
     /**
      * Database user

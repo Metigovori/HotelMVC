@@ -1,1 +1,68 @@
-test
+<!-- <?php
+ob_start();
+require_once "autoloader.php";
+
+use App\Models\Users; // Assuming you have a Users Eloquent model in the "models" folder
+use Core\Session as CoreSession;
+
+$session = new CoreSession();
+if ($session->isSignedIn()) {
+  header("Location: home.php");
+  exit();
+}
+
+if (isset($_POST['login'])) {
+  $username = $_POST['user'];
+  $password = $_POST['pass'];
+
+  $user = Users::verifyUser($username, $password);
+
+  if ($user) {
+    $session->login($user);
+    header("Location: home.php");
+    exit();
+  } else {
+    $session->message("Your username or password is incorrect");
+  }
+}
+
+$email = "";
+$password = "";
+?> -->
+{% extends "layout/header.html" %}
+
+{% block title %}SUN RISE ADMIN{% endblock %}
+
+{% block content %}
+<div id="clouds">
+    <div class="cloud x1"></div>
+    <div class="cloud x2"></div>
+    <div class="cloud x3"></div>
+    <div class="cloud x4"></div>
+    <div class="cloud x5"></div>
+</div>
+<div class="container">
+    <div id="login">
+        <form method="post">
+            <fieldset class="clearfix">
+                <p><span class="fontawesome-user"></span><input type="text" name="user" placeholder="Username" value="{{ username|default('') }}" required></p>
+                <p><span class="fontawesome-lock"></span><input type="password" name="pass" placeholder="Password" required></p>
+                <p><input class="btn" type="submit" name="login" value="Login"></p>
+            </fieldset>
+        </form>
+    </div> <!-- end login -->
+</div>
+<div class="bottom mt-5">
+    <h3 class="mt-5 pt-5"><a href="../index.php">SUN RISE HOMEPAGE</a></h3>
+</div>
+<h5 class="bg-danger text-white pl-3">
+    {{ session.message|default('') }}
+</h5>
+<script src="admin/js/jquery-1.10.2.js"></script>
+<script src="admin/js/bootstrap.min.js"></script>
+<script src="admin/js/jquery.metisMenu.js"></script>
+<script src="admin/js/custom-scripts.js"></script>
+</body>
+
+</html>
+{% endblock %}
