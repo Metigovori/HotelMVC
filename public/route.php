@@ -13,6 +13,11 @@ $router->add('home', ['controller' => 'Home', 'action' => 'admin']);
 
 $router->add('payment', ['controller' => 'UserController', 'action' => 'index']);
 
+
+$router->add('login-form', ['controller' => 'AuthController', 'action' => 'loginForm']);
+$router->add('login-store', ['controller' => 'AuthController', 'action' => 'loginStore']);
+$router->add('logout', ['controller' => 'AuthController', 'action' => 'logout']);
+
 // Users routes
 $router->add('users', ['controller' => 'UserController', 'action' => 'index']);
 $router->add('users-create', ['controller' => 'UserController', 'action' => 'create']);
