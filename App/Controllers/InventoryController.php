@@ -2,12 +2,20 @@
 
 namespace App\Controllers;
 
+use App\Helper\Session;
 use App\Models\Inventory;
 use \Core\View;
 use \Core\Controller;
 
 class InventoryController extends Controller
 {
+    public function __construct()
+    {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()){
+            header('Location: /login-form');
+        }
+    }
     public function index()
     {
         $inventory = Inventory::orderBy('id', 'desc')->get();
@@ -44,7 +52,7 @@ class InventoryController extends Controller
     public function update()
     {
         $inventoryItem = Inventory::findOrFail($_POST['id']);
-        $inventoryItem->productName = $_POST['productName'];
+        $inventoryItem->productName = $_POST['productname'];
         $inventoryItem->quantity = $_POST['quantity'];
         $inventoryItem->price = $_POST['price'];
         $inventoryItem->message = $_POST['message'];

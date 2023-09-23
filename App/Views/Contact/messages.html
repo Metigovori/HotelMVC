@@ -1,31 +1,19 @@
-<?php
+{% extends 'layout/header.html' %}
 
-use Core\Session;
-use App\Models\Payment; // Updated namespace for Payment model
-
-include "./layout/header.php";
-
-$session = new Session();
-if ($session->isSignedIn()) {
-    header("Location: admin/index.php");
-}
-?>
-
+{% block content %}
 <div id="page-wrapper">
     <div id="page-inner">
         <div class="row">
             <div class="col-md-12">
                 <h1 class="page-header">
-                    Profit Details<small></small>
+                    Newsletters<small> panel</small>
                 </h1>
             </div>
         </div>
         <!-- /. ROW  -->
 
         <div class="row">
-            <?php
-            $chart_data = Payment::getPaymentChartData(); // Use Eloquent model method
-            ?>
+            {% set contacts = allContacts %}
 
             <br>
             <br>
@@ -34,10 +22,7 @@ if ($session->isSignedIn()) {
             <div id="chart"></div>
             <div class="col-md-12">
                 <!-- Advanced Tables -->
-                <?php
-                $paymentRecords = Payment::all(); // Use Eloquent model method to get all records
-                ?>
-
+                {% set paymentRecords = allPaymentRecords %}
                 <div class="panel panel-default">
                     <div class="panel-body">
                         <div class="table-responsive">
@@ -56,24 +41,22 @@ if ($session->isSignedIn()) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php
-                                    foreach ($paymentRecords as $row) {
-                                        $id = $row->id;
-                                        $class = ($id % 2 == 1) ? 'gradeC' : 'gradeU';
-                                        $profit = $row->fintot * 10 / 100; // Calculate profit
-                                        echo "<tr class='{$class}'>
-                                        <td>{$row->id}</td>
-                                        <td>{$row->title} {$row->fname} {$row->lname}</td>
-                                        <td>{$row->cin}</td>
-                                        <td>{$row->cout}</td>
-                                        <td>\${$row->ttot}</td>
-                                        <td>\${$row->mepr}</td>
-                                        <td>\${$row->btot}</td>
-                                        <td>\${$row->fintot}</td>
-                                        <td>\${$profit}</td>
-                                        </tr>";
-                                    }
-                                    ?>
+                                    {% for row in paymentRecords %}
+                                        {% set id = row.id %}
+                                        {% set class = (id % 2 == 1) ? 'gradeC' : 'gradeU' %}
+                                        {% set profit = row.fintot * 10 / 100 %}
+                                        <tr class="{{ class }}">
+                                            <td>{{ row.id }}</td>
+                                            <td>{{ row.title }} {{ row.fname }} {{ row.lname }}</td>
+                                            <td>{{ row.cin }}</td>
+                                            <td>{{ row.cout }}</td>
+                                            <td>${{ row.ttot }}</td>
+                                            <td>${{ row.mepr }}</td>
+                                            <td>${{ row.btot }}</td>
+                                            <td>${{ row.fintot }}</td>
+                                            <td>${{ profit }}</td>
+                                        </tr>
+                                    {% endfor %}
                                 </tbody>
                             </table>
                         </div>
@@ -86,6 +69,10 @@ if ($session->isSignedIn()) {
     </div>
 </div>
 
+
+    <!-- /. ROW  -->
+</div>
+</div>
 </div>
 <!-- /. PAGE INNER  -->
 </div>
@@ -108,17 +95,7 @@ if ($session->isSignedIn()) {
 </script>
 <!-- Custom Js -->
 <script src="assets/js/custom-scripts.js"></script>
-
 </body>
+
 </html>
-<script>
-    Morris.Bar({
-        element: 'chart',
-        data: <?php echo json_encode($chart_data); ?>, // JSON encode the data
-        xkey: 'date',
-        ykeys: ['profit'],
-        labels: ['Profit'],
-        hideHover: 'auto',
-        stacked: true
-    });
-</script>
+{% endblock %}

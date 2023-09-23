@@ -1,0 +1,22 @@
+{% set roombook = Roombook() %}
+{% set reservations = roombook.all() %}
+
+{% for trow in reservations %}
+    {% set check_in = trow.Cin %}
+    
+    {% if check_in is defined %}
+        <tr>
+            <td>{{ trow.id }}</td>
+            <td>{{ trow.FName }} {{ trow.LName }}</td>
+            <td>{{ trow.Email }}</td>
+            <td>{{ trow.Country }}</td>
+            <td>{{ trow.TRoom }}</td>
+            <td>{{ trow.Bed }}</td>
+            <td>{{ trow.Meal }}</td>
+            <td>{{ trow.Cin }}</td>
+            <td>{{ trow.Cout }}</td>
+            <td>{{ trow.Stat }}</td>
+            <td><a href="roombook.php?rid={{ trow.id }}" class="btn btn-primary">Action</a></td>
+        </tr>
+    {% endif %}
+{% endfor %}

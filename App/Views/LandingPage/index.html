@@ -496,7 +496,7 @@
 							</div>
 							<div class="price-selet">
 								<h3><span>$</span>320</h3>
-								<a href="admin/reservation.php">Book Now</a>
+								<a href="/reservation">Book Now</a>
 							</div>
 						</div>
 					</div>
@@ -519,7 +519,7 @@
 							</div>
 							<div class="price-selet">
 								<h3><span>$</span>220</h3>
-								<a href="admin/reservation.php">Book Now</a>
+								<a href="/reservation">Book Now</a>
 							</div>
 						</div>
 					</div>
@@ -542,7 +542,7 @@
 							</div>
 							<div class="price-selet">
 								<h3><span>$</span>180</h3>
-								<a href="admin/reservation.php">Book Now</a>
+								<a href="/reservation">Book Now</a>
 							</div>
 						</div>
 					</div>
@@ -565,7 +565,7 @@
 							</div>
 							<div class="price-selet">
 								<h3><span>$</span> 150</h3>
-								<a href="admin/reservation.php">Book Now</a>
+								<a href="/reservation">Book Now</a>
 							</div>
 						</div>
 					</div>
@@ -693,18 +693,18 @@
 				<div class="contact-agileits">
 					<h4>Contact Us</h4>
 					<p class="contact-agile2">Sign Up For Our News Letters</p>
-					<form method="post" name="sentMessage" id="contactForm">
+					<form method="post" name="sentMessage" id="contactForm" action="/newsletter">
 						<div class="control-group form-group">
 
 							<label class="contact-p1">Full Name:</label>
-							<input type="text" class="form-control" name="name" id="name" required>
+							<input type="text" class="form-control" name="fullname" id="name" required>
 							<p class="help-block"></p>
 
 						</div>
 						<div class="control-group form-group">
 
 							<label class="contact-p1">Phone Number:</label>
-							<input type="tel" class="form-control" name="phone" id="phone" required>
+							<input type="tel" class="form-control" name="phoneno" id="phone" required>
 							<p class="help-block"></p>
 
 						</div>
@@ -719,19 +719,6 @@
 
 						<input type="submit" name="sub" value="Send Now" class="btn btn-primary">
 					</form>
-					<?php
-					if (isset($_POST['sub'])) {
-						$name = $_POST['name'];
-						$phone = $_POST['phone'];
-						$email = $_POST['email'];
-						$approval = "Not Allowed";
-						$sql = "INSERT INTO `contact`(`fullname`, `phoneno`, `email`,`cdate`,`approval`) VALUES ('$name','$phone','$email',now(),'$approval')";
-
-
-						if (mysqli_query($con, $sql))
-							echo "OK";
-					}
-					?>
 				</div>
 			</div>
 			<div class="col-lg-6 col-md-6 col-sm-6 contact-w3-agile1" data-aos="flip-right">
@@ -765,7 +752,7 @@
 
 	<!-- /contact form -->
 	<!-- Calendar -->
-	<script src="js/jquery-ui.js"></script>
+	<script src="client/js/jquery-ui.js"></script>
 	<script>
 		$(function() {
 			$("#datepicker,#datepicker1,#datepicker2,#datepicker3").datepicker();
@@ -774,7 +761,7 @@
 	<!-- //Calendar -->
 	<!-- gallery popup -->
 	<link rel="stylesheet" href="css/swipebox.css">
-	<script src="js/jquery.swipebox.min.js"></script>
+	<script src="client/js/jquery.swipebox.min.js"></script>
 	<script type="text/javascript">
 		jQuery(function($) {
 			$(".swipebox").swipebox();

@@ -1,35 +1,44 @@
 <?php
+
 namespace App\Controllers;
 
+use App\Helper\Session;
 use App\Models\Users;
 use \Core\View;
 use \Core\Controller;
 
 class UserController extends Controller
 {
+
+    public const TIMESTAMP = false;
+    public function __construct()
+    {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+        } elseif ($session->getRole() != 'admin') {
+            View::renderTemplate('access_denied.html');
+        }
+    }
+
+
     public function index()
     {
         $users = Users::orderBy('id', 'desc')->get();
-        View::renderTemplate('Users/index.html', ['users' => $users]);
+        View::renderTemplate('Users/usersetting.html', ['users' => $users]);
     }
 
     public function create()
     {
-        View::renderTemplate('Users/create.html');
+        View::renderTemplate('Users/usersetting.html');
     }
 
     public function store()
     {
         $user = new Users();
-        $user->first_name = $_POST['first_name'];
-        $user->last_name = $_POST['last_name'];
-        $user->country = $_POST['country'];
-        $user->city = $_POST['city'];
-        $user->address = $_POST['address'];
-        $user->phone = $_POST['phone'];
-        $user->email = $_POST['email'];
-        $user->status = isset($_POST['status']) ? 1 : 0; // Assuming you have a status checkbox
-        $user->password = password_hash($_POST['password'], PASSWORD_DEFAULT); // Hash the password
+        $user->usname = $_POST['usname'];
+        $user->role = $_POST['role'];
+        $user->pass = $_POST['pass'];
         $user->save();
         header("Location: /users");
     }
@@ -39,30 +48,21 @@ class UserController extends Controller
         // Implement if needed
     }
 
-    public function edit()
-    {
-        $user = Users::findOrFail($_POST['id']);
-        View::renderTemplate('Users/edit.html', ['user' => $user]);
-    }
+
 
     public function update()
     {
-        $user = Users::findOrFail($_POST['id']);
-        $user->first_name = $_POST['first_name'];
-        $user->last_name = $_POST['last_name'];
-        $user->country = $_POST['country'];
-        $user->city = $_POST['city'];
-        $user->address = $_POST['address'];
-        $user->phone = $_POST['phone'];
-        $user->email = $_POST['email'];
-        $user->status = isset($_POST['status']) ? 1 : 0; // Assuming you have a status checkbox
+        $user = Users::findOrFail($_POST['user_id']);
+        $user->usname = $_POST['usname'];
+        $user->role = $_POST['role'];
+        $user->pass = $_POST['pass'];
         $user->update();
         header("Location: /users");
     }
 
     public function destroy()
     {
-        $user = Users::findOrFail($_POST['id']);
+        $user = Users::findOrFail($_POST['user_id']);
         $user->delete();
         header("Location: /users");
     }

@@ -1,6 +1,9 @@
 <?php
+require_once __DIR__ . '/vendor/autoload.php';
+
 use Illuminate\Database\Capsule\Manager as Capsule;
 use App\Config;
+
 
 $capsule = new Capsule;
 $capsule->addConnection([
@@ -12,3 +15,5 @@ $capsule->addConnection([
 ]);
 $capsule->setAsGlobal();
 $capsule->bootEloquent();
+
+

@@ -1,4 +1,6 @@
-{% set session = app.session %}
+
+
+
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -12,8 +14,10 @@
     <link href="admin/css/font-awesome.css" />
     <!-- Custom Styles-->
     <link href="admin/css/custom-styles.css" rel="stylesheet" />
+ 
     <!-- Google Fonts-->
     <link href='http://fonts.googleapis.com/css?family=Open+Sans' rel='stylesheet' type='text/css' />
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" integrity="sha384-DyZ88mC6Up2uqS4h/KRgHuoeGwBcD4Ng9SiP4dIRy0EXTlnuz47vAwmeGwVChigm" crossorigin="anonymous"/>
     {% block css %}{% endblock %}
 </head>
 
@@ -37,13 +41,11 @@
                         <i class="fa fa-user fa-fw"></i> <i class="fa fa-caret-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-
-                        {% if session.get('role') == 'admin' %}
-                            <li><a href="usersetting.php"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
-                        {% endif %}
-                        <li><a href="/settings"><i class="fa fa-gear fa-fw"></i> Settings</a></li>
+                        <li><a href="/users"><i class="fa fa-user fa-fw"></i> User Profile</a></li>
+                        <li><a href="/settings">
+                            <i class="fas fa-cog fa-spin"></i> Settings</a></li>
                         <li class="divider"></li>
-                        <li><a href="logout.php"><i class="fa fa-sign-out fa-fw"></i> Logout</a></li>
+                        <li><a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
                     </ul>
 
                     <!-- /.dropdown-user -->
@@ -57,7 +59,7 @@
                 <ul class="nav" id="main-menu">
 
                     <li>
-                        <a href="/settings"><i class="fa fa-dashboard"></i>Rooms Status</a>
+                        <a href="/settings"><i class="fas fa-tachometer-alt"></i></i>Rooms Status</a>
                     </li>
                     <li>
                         <a class="active-menu" href="/roomAdd"><i class="fa fa-plus-circle"></i>Add Room</a>
@@ -71,10 +73,14 @@
             </div>
 
         </nav>
+        
         <!-- /. NAV SIDE  -->
-
         {% block content %}
         {% endblock %}
+        {% include 'layout/footer.html' %}
+
+
+
     </div>
 </body>
 

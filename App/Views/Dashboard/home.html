@@ -77,7 +77,10 @@
                                                                 <td>{{ trow.cin }}</td>
                                                                 <td>{{ trow.cout }}</td>
                                                                 <td>{{ trow.stat }}</td>
-                                                                <td><a href='roombook.php?rid={{ trow.getId() }}' class='btn btn-primary'>Action</a></td>
+                                                                <td> <form method='post' action='/roombook'>
+                                                                    <input type='hidden' name='id' value='{{ trow.id}}'>
+                                                                    <input type='submit' class="btn btn-primary" value='Action'>
+                                                                </form></td>
                                                             </tr>
                                                             {% endif %}
                                                             {% endfor %}
@@ -102,7 +105,7 @@
                             <div class="panel panel-info">
                                 <div class="panel-heading">
                                     <h4 class="panel-title">
-                                        <a data-toggle="collapse" data-parent="{{'#accordio' }}" href="{{ '#collapseOne' }}" class="collapsed">
+                                        <a data-toggle="collapse" data-parent="{{'#accordion' }}" href="{{ '#collapseOne' }}" class="collapsed">
                                             <button class="btn btn-primary" type="button">
                                                 Booked Rooms <span class="badge">{{ r }}</span>
                                             </button>
@@ -122,9 +125,10 @@
                                                     <h3>{{ u.FName }}</h3>
                                                 </div>
                                                 <div class='panel-footer back-footer-blue'>
-                                                    <a href='show.php?sid={{ fid }}'><button class='btn btn-primary btn' data-toggle='modal' data-target='#myModal'>
-                                                            Show
-                                                        </button></a>
+                                                    <form method='post' action='/show'>
+                                                    <input type='hidden' name='id' value='{{ u.id}}'><button class='btn btn-primary btn' data-toggle='modal' data-target='#myModal'>
+                                                        <input type='submit' class="bg-primary color-primary" value='Show'>
+                                                        </button></input></form>
                                                     {{ u.TRoom }}
                                                 </div>
                                             </div>
@@ -177,7 +181,7 @@
                                                         {% endfor %}
                                                     </tbody>
                                                 </table>
-                                                <a href="messages.php" class="btn btn-primary">More Action</a>
+                                                <a href="/messages" class="btn btn-primary">More Action</a>
                                             </div>
                                         </div>
                                     </div>

@@ -2,16 +2,24 @@
 
 namespace App\Controllers;
 
+use App\Helper\Session;
 use App\Models\Payment;
 use Core\View;
 use Core\Controller;
 
 class PaymentController extends Controller
 {
+    public function __construct()
+    {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+        }
+    }
     public function index()
     {
         $payments = Payment::orderBy('id', 'desc')->get();
-        View::renderTemplate('payment.html', ['payments' => $payments]);
+        View::renderTemplate('Payment/payment.html', ['payments' => $payments]);
     }
 
     public function create()

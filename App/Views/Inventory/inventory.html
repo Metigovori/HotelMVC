@@ -174,9 +174,6 @@
 <!-- Custom Js -->
 <script src="admin/js/custom-scripts.js"></script>
 
-<!-- Remove this duplicate script -->
-
-<!-- Assuming you have included the jQuery library before this script -->
 <script>
     $(document).on('click', '.edit-btn', function() {
         var id = $(this).data('id');
@@ -195,8 +192,6 @@
         var button = $(event.relatedTarget);
         var productId = button.data('itemid');
         var productName = button.data('productname');
-
-        // Assuming you have input fields inside the modal with names: product_id, product_name, product_price, product_quantity, and product_message
         var modal = $(this);
         modal.find('input[name="id"]').val(productId);
         modal.find('input[name="productname"]').val(productName);

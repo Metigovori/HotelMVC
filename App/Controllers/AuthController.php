@@ -10,15 +10,17 @@ use \Core\Controller;
 
 class AuthController extends Controller
 {
+
+
     public function loginForm()
     {
         $session = Session::getInstance();
         $message = '';
-        if(!empty($session->message)){
+        if (!empty($session->message)) {
             $message = $session->message;
         }
 
-        if (isset($_SESSION['userId'])){
+        if (isset($_SESSION['userId'])) {
             header('Location: /users');
         }
 
@@ -27,20 +29,23 @@ class AuthController extends Controller
 
     public function loginStore()
     {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-        $user = Users::where('email', $email)->where('password', $password)->latest()->first();
+        $usname = $_POST['usname'];
+        $pass = $_POST['pass'];
+        $user = Users::where('usname', $usname)->where('pass', $pass)->latest()->first();
         $session = Session::getInstance();
+
         if ($user) {
             $session->login($user);
-            header('Location: /users');
+            $session->setRole($user->role);
+            header('Location: /home');
             exit;
         } else {
-            $session->message("Your email or password is incorrent");
+            $session->message("Your email or password is incorrect");
             header('Location: /login-form');
         }
         header('Location: /login-form');
     }
+
 
     public function logout()
     {

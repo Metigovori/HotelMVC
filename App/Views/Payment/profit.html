@@ -1,0 +1,95 @@
+{% extends "layout/header.html" %}
+
+{% block content %}
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    Profit Details<small></small>
+                </h1>
+            </div>
+        </div>
+        <!-- /. ROW  -->
+
+        <div class="row">
+            {% set chart_data = getPaymentChartData() %}
+
+            <br>
+            <br>
+            <br>
+            <br>
+            <div id="chart"></div>
+            <div class="col-md-12">
+                <!-- Advanced Tables -->
+                {% set paymentRecords = getPaymentRecords() %}
+
+                <div class="panel panel-default">
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover" id="dataTables-example">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Name</th>
+                                        <th>Check in</th>
+                                        <th>Check out</th>
+                                        <th>Room Rent</th>
+                                        <th>Bed Rent</th>
+                                        <th>Meals</th>
+                                        <th>Gr.Total</th>
+                                        <th>Profit</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for row in paymentRecords %}
+                                    {% set id = row.id %}
+                                    {% set class = (id % 2 == 1) ? 'gradeC' : 'gradeU' %}
+                                    {% set profit = row.fintot * 10 / 100 %} {# Calculate profit #}
+                                    <tr class="{{ class }}">
+                                        <td>{{ row.id }}</td>
+                                        <td>{{ row.title }} {{ row.fname }} {{ row.lname }}</td>
+                                        <td>{{ row.cin }}</td>
+                                        <td>{{ row.cout }}</td>
+                                        <td>${{ row.ttot }}</td>
+                                        <td>${{ row.mepr }}</td>
+                                        <td>${{ row.btot }}</td>
+                                        <td>${{ row.fintot }}</td>
+                                        <td>${{ profit }}</td>
+                                    </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <!--End Advanced Tables -->
+            </div>
+        </div>
+        <!-- /. ROW  -->
+    </div>
+</div>
+
+</div>
+<!-- /. PAGE INNER  -->
+</div>
+<!-- /. PAGE WRAPPER  -->
+{% endblock %}
+
+{% block scripts %}
+<!-- JS Scripts-->
+{{ parent() }}
+<script>
+    var chartData = "{{ chart_data|json_encode|raw }}";
+    
+    Morris.Bar({
+        element: 'chart',
+        data: chartData,
+        xkey: 'date',
+        ykeys: ['profit'],
+        labels: ['Profit'],
+        hideHover: 'auto',
+        stacked: true
+    });
+</script>
+{% endblock %}

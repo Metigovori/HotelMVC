@@ -1,9 +1,8 @@
-{% include 'layout/header.html' %}
+{% extends "layout/header.html" %}
 
-{% set allowedRoles = ['admin', 'manager'] %}
-{% if allowedRoles|checkAccess %}
 
-{% content block %}
+
+{% block content %}
     <div id="page-wrapper">
         <div id="page-inner">
             <div class="row">
@@ -35,15 +34,15 @@
                                         {% for u in users %}
                                             {% set cssClass = loop.index is even ? 'gradeC' : 'gradeU' %}
                                             <tr class="{{ cssClass }}">
-                                                <td>{{ u.getId() }}</td>
-                                                <td>{{ u.getUsname() }}</td>
-                                                <td>{{ u.getPass() }}</td>
-                                                <td>{{ u.getRole() }}</td>
+                                                <td>{{ u.id }}</td>
+                                                <td>{{ u.usname }}</td>
+                                                <td>{{ u.pass }}</td>
+                                                <td>{{ u.role }}</td>
                                                 <td>
-                                                    <a href='#' class='edit-btn' data-toggle='modal' data-target='#myModal' data-userid='{{ u.getId() }}' data-username='{{ u.getUsname() }}' data-pass="{{ u.getPass()|e('html_attr') }}" data-role='{{ u.getRole() }}'>Edit</a>
+                                                    <a href='#' class='edit-btn' data-toggle='modal' data-target='#myModal' data-userid='{{ u.id }}' data-username='{{ u.usname }}' data-pass="{{ u.pass|e('html_attr') }}" data-role='{{ u.role }}'>Edit</a>
                                                 </td>
                                                 <td>
-                                                    <button class='btn btn-danger delete-btn' data-toggle='modal' data-target='#myModal2' data-userid='{{ u.getId() }}' data-username='{{ u.getUsname() }}'>Delete</button>
+                                                    <button class='btn btn-danger delete-btn' data-toggle='modal' data-target='#myModal2' data-userid='{{ u.id }}' data-username='{{ u.usname }}'>Delete</button>
                                                 </td>
                                             </tr>
                                         {% endfor %}
@@ -52,6 +51,52 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="panel-body">
+                        <button class="btn btn-primary btn" data-toggle="modal" data-target="#myModal1">
+                            Add New Admin
+                        </button>
+                        <div class="modal fade" id="myModal1" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                                        <h4 class="modal-title" id="myModalLabel">Add the User name and Password</h4>
+                                    </div>
+                                    <form method="post" action="/users-create">
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>Add new User name</label>
+                                                <input name="usname" class="form-control" placeholder="Enter User name">
+                                            </div>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label>New Password</label>
+                                                <input name="pass" class="form-control" placeholder="Enter Password">
+                                            </div>
+                                        </div>
+    
+                                        <div class="modal-body">
+                                            <div class="form-group">
+                                                <label class="form-control" for="role">Role :</label>
+                                                <select class="" name="role" id="role">
+                                                    <option value="admin">Administrator</option>
+                                                    <option value="worker">Worker</option>
+                                                </select>
+                                            </div>
+                                        </div>
+    
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                                            <input type="submit" name="add_user" value="Add" class="btn btn-primary">
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
                     {# Modal for deleting a user #}
                     <div class="modal fade" id="myModal2" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
@@ -64,8 +109,8 @@
                                 <div class="modal-body">
                                     <p>Are you sure you want to delete this user?</p>
                                 </div>
-                                <form id="deleteForm" method="post" action="{{ path('delete_user') }}">
-                                    <input type="hidden" name="user_id" id="deleteUserId" value="">
+                                <form id="deleteForm" method="post" action="/users-delete">
+                                    <input type="hidden" name="user_id" id="deleteUserId" value="{{ u.id }}">
                                     <input type="hidden" name="username" id="deleteUsername" value="">
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
@@ -84,7 +129,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     <h4 class="modal-title" id="myModalLabel">Add New User</h4>
                                 </div>
-                                <form method="post" action="{{ path('add_user') }}">
+                                <form method="post" action="/user-create">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label>Add new User name</label>
@@ -119,7 +164,7 @@
                                     <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                                     <h4 class="modal-title" id="myModalLabel">Edit User</h4>
                                 </div>
-                                <form id="editForm" method="post" action="{{ path('edit_user') }}">
+                                <form id="editForm" method="post" action="/users-edit">
                                     <div class="modal-body">
                                         <div class="form-group">
                                             <label>Edit User name</label>
@@ -150,9 +195,9 @@
             </div>
         </div>
     </div>
-{% endif %}
 
-{% endblock %}
+
+
 
 
 
@@ -162,21 +207,15 @@
 </div>
 <!-- /. PAGE WRAPPER  -->
 </div>
-<!-- /. WRAPPER  -->
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-<!-- Include jQuery library -->
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-<script src="assets/js/jquery-1.10.2.js"></script>
+<script src="admin/js/jquery-1.10.2.js"></script>
 <!-- Bootstrap Js -->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="admin/js/bootstrap.min.js"></script>
 <!-- Metis Menu Js -->
-<script src="assets/js/jquery.metisMenu.js"></script>
+<script src="admin/js/jquery.metisMenu.js"></script>
 <!-- Custom Js -->
-<script src="assets/js/custom-scripts.js"></script>
-
-<!-- Remove this duplicate script -->
-
+<script src="admin/js/custom-scripts.js"></script>
 
 <script>
     $(document).on('click', '.edit-btn', function() {
@@ -200,6 +239,4 @@
     });
 </script>
 
-</body>
-
-</html>
+{% endblock %}

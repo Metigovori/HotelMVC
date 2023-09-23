@@ -1,0 +1,114 @@
+{% extends "layout/header.html" %}
+
+{% block content %}
+<div id="page-wrapper">
+    <div id="page-inner">
+        <div class="row">
+            <div class="col-md-12">
+                <h1 class="page-header">
+                    Room Booking<small>{{ cin }}</small>
+                </h1>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8 col-sm-8">
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        Booking Confirmation
+                    </div>
+                    <div class="panel-body">
+                        <div class="table-responsive">
+                            <table class="table">
+                          
+                                <tr>
+                                    <th>DESCRIPTION</th>
+                                    <th>INFORMATION</th>
+                                </tr>    
+                           
+                                <tr>
+                                    <th>Name</th>
+                                    <th>{{ room.Title ~ room.FName ~ room.LName }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <th>{{ room.Email }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Nationality</th>
+                                    <th>{{ room.National }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Country</th>
+                                    <th>{{ room.Country }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Phone No</th>
+                                    <th>{{ room.Phone }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Type Of Room</th>
+                                    <th>{{ room.TRoom }}</th>
+                                </tr>
+                                <tr>
+                                    <th>No Of Room</th>
+                                    <th>{{ room.NRoom }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Meal Plan</th>
+                                    <th>{{ room.Meal }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Bedding</th>
+                                    <th>{{ room.Bed }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Check-in Date</th>
+                                    <th>{{ room.cin }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Check-out Date</th>
+                                    <th>{{ room.cout }}</th>
+                                </tr>
+                                <tr>
+                                    <th>No of days</th>
+                                    <th>{{ room.nodays }}</th>
+                                </tr>
+                                <tr>
+                                    <th>Status Level</th>
+                                    <th>{{ room.stat }}</th>
+                                </tr>
+                              
+                            </table>
+                        </div>
+                    </div>
+                    <div class="panel-footer">
+                        <form method="post" action="/confirm">
+                            <div class="form-group">
+                                <label>Select the Confirmation</label>
+                                <select name="conf" class="form-control">
+                                    <option value selected></option>
+                                    <option value="Confirm">Confirm</option>
+                                </select>
+                            </div> 
+                            <input type="hidden" name="id" value="{{ room.id }}" >
+                            <input type="submit" name="co" value="Confirm" class="btn btn-success">
+                           
+                            <input type="submit" name="delete" value="Delete" class="btn btn-danger">
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            {# Rest of your PHP code for the Available Room Details section #}
+
+        </div>
+    </div>
+</div>
+
+{# Include JavaScript libraries #}
+<script src="admin/js/jquery-1.10.2.js"></script>
+<script src="admin/js/bootstrap.min.js"></script>
+<script src="admin/js/jquery.metisMenu.js"></script>
+<script src="admin/js/custom-scripts.js"></script>
+{% endblock %}

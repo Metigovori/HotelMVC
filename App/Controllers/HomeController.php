@@ -2,6 +2,7 @@
 
 namespace App\Controllers;
 
+use App\Helper\Session;
 use App\Models\Contact;
 use App\Models\Roombook;
 use \Core\View;
@@ -10,7 +11,7 @@ use \Core\Controller;
 /**
  * Home controller
  */
-class Home extends Controller
+class HomeController extends Controller
 {
 
     /**
@@ -19,6 +20,7 @@ class Home extends Controller
      * @return void
      */
 
+
     public function client()
     {
         View::renderTemplate('LandingPage/index.html');
@@ -26,8 +28,12 @@ class Home extends Controller
 
     public function admin()
     {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()) {
+            header('Location: /login-form');
+        }
         $contacts = Contact::orderBy('id', 'desc')->get();
         $roombook = Roombook::orderBy('id', 'desc')->get();
-        View::renderTemplate('home.html', ['roombook' => $roombook], ['contacts' => $contacts]);
+        View::renderTemplate('Dashboard/home.html', ['roombook' => $roombook], ['contacts' => $contacts]);
     }
 }

@@ -11,6 +11,7 @@ class Users extends Model
     protected $table = "login";
 
     protected $fillable = [
+        'userid',
         'usname', 'pass', 'role'
     ];
 
@@ -25,6 +26,6 @@ class Users extends Model
     {
         return self::where('usname', $username)
             ->where('pass', $password)
-            ->first(); // Returns the first matching user or null
+            ->first(); 
     }
 }

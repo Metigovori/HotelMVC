@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Helper;
 
 class Session
@@ -15,7 +16,9 @@ class Session
         $this->checkMessage();
     }
 
-    protected function __clone(){}
+    protected function __clone()
+    {
+    }
 
     public static function getInstance(): Session
     {
@@ -27,6 +30,19 @@ class Session
         return self::$instances[$cls];
     }
 
+    public function setRole($role)
+    {
+        $_SESSION['role'] = $role;
+    }
+
+    public function getRole()
+    {
+        if (isset($_SESSION['role'])) {
+            return $_SESSION['role'];
+        } else {
+            return null; // or any default role you want
+        }
+    }
 
     public function isSignedIn()
     {
@@ -49,6 +65,7 @@ class Session
         if ($user) {
             $this->userId = $user->id;
             $_SESSION['userId'] = $user->id;
+            $_SESSION['role'] = $user->role;
             $this->signedIn = true;
         }
     }
@@ -79,4 +96,3 @@ class Session
         }
     }
 }
-?>

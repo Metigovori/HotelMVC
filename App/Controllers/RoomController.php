@@ -2,12 +2,20 @@
 
 namespace App\Controllers;
 
+use App\Helper\Session;
 use App\Models\Rooms;
 use Core\View;
 use Core\Controller;
 
 class RoomController extends Controller
 {
+    public function __construct()
+    {
+        $session = Session::getInstance();
+        if (!$session->isSignedIn()){
+            header('Location: /login-form');
+        }
+    }
     public function index()
     {
         $rooms = Rooms::orderBy('id', 'desc')->get();

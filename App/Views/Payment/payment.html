@@ -1,4 +1,4 @@
-{% extends "./layout/header.html" %}
+{% extends "layout/header.html" %}
 
 {% block title %}Payment{% endblock %}
 
@@ -19,8 +19,6 @@
                 <!-- Advanced Tables -->
                 <div class="panel panel-default">
                     <div class="panel-body">
-                     
-                            <p>You are not signed in. Please <a href="/login">sign in</a> to view payment details.</p>
                    
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
@@ -72,30 +70,22 @@
 </div>
 <!-- /. PAGE INNER  -->
 </div>
-<!-- /. PAGE WRAPPER  -->
-<!-- /. WRAPPER  -->
-<!-- JS Scripts-->
-<!-- jQuery Js -->
-<script src="assets/js/jquery-1.10.2.js"></script>
+
+<script src="admin/js/jquery-1.10.2.js"></script>
 <!-- Bootstrap Js -->
-<script src="assets/js/bootstrap.min.js"></script>
+<script src="admin/js/bootstrap.min.js"></script>
 <!-- Metis Menu Js -->
-<script src="assets/js/jquery.metisMenu.js"></script>
-<!-- DATA TABLE SCRIPTS -->
-<script src="assets/js/dataTables/jquery.dataTables.js"></script>
-<script src="assets/js/dataTables/dataTables.bootstrap.js"></script>
+<script src="admin/js/jquery.metisMenu.js"></script>
+
+<script src="admin/js/dataTables/jquery.dataTables.js"></script>
+<script src="admin/js/dataTables/dataTables.bootstrap.js"></script>
 <script>
     $(document).ready(function () {
         $('#dataTables-example').dataTable();
     });
 </script>
 <!-- Custom Js -->
-<script src="assets/js/custom-scripts.js"></script>
-
-</body>
-
-</html>
-
+<script src="admin/js/custom-scripts.js"></script>
 {% endblock %}
 
 
